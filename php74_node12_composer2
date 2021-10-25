@@ -1,0 +1,30 @@
+# syntax=docker/dockerfile
+FROM php:7.4-cli
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PATH=$PATH:vendor/bin
+
+RUN export DEBIAN_FRONTEND=noninteractive  \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+      curl \
+      git \
+      python3-dev \
+      python3-pip \
+      zlib1g-dev \
+      libzip-dev \
+      unzip
+
+RUN docker-php-ext-install zip && pip install awscli 
+                   
+# composer stuff         
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');"  \
+    && mv composer.phar /usr/local/bin/composer
+
+#Npm install
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash \
+   && apt-get update  && apt install nodejs -y; 
+   
+RUN rm -rf /var/lib/apt/lists/*
