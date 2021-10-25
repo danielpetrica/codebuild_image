@@ -15,7 +15,15 @@ RUN export DEBIAN_FRONTEND=noninteractive  \
       libzip-dev \
       unzip
 
-RUN docker-php-ext-install zip && pip install awscli 
+RUN docker-php-ext-install zip; \
+    docker-php-ext-install gd ; \
+    docker-php-ext-install bcmath
+
+RUN docker-php-ext-configure zip; \
+    docker-php-ext-configure gd; \
+    docker-php-ext-install bcmath
+
+RUN pip install awscli 
 
 # Composer stuff     
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
