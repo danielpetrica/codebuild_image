@@ -4,3 +4,4 @@ aws/
 out/
 out.txt/
 out.txt
+.devcontainer/
