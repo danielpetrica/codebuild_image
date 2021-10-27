@@ -1,0 +1,8 @@
+test.dockerfile
+awscliv2.zip
+aws/
+out/
+out.txt/
+out.txt
+.devcontainer/
+.idea/
